@@ -1,0 +1,28 @@
+<div id="content"></div>
+
+<script>
+  var $content = $('#content'),
+      $loader = getLoadingIndicator().appendTo($content);
+  
+  // Get the current user. From the user profile, extract the tree person id.
+  client.getCurrentUser().then(function(userResponse){
+    return userResponse.getUser().getPersonId();
+  })
+  
+  // Retrieve the person
+  .then(function(personId){
+    return client.getPerson(personId);
+  })
+  
+  // Get the person from the response and print
+  .then(function(personResponse){
+    $loader.hide();
+    displayPerson(personResponse.getPerson()).appendTo($content);
+  })
+  
+  // Catch any errors
+  .catch(function(e){
+    $loader.hide();
+    $content.append(displayError(e));
+  });
+</script>

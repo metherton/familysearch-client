@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="form-group col-sm-6 col-md-4">
+    <label for="personIdInput">Person Id</label>
+    <input type="text" class="form-control" id="personIdInput" placeholder="Person Id">
+  </div>
+</div>
+<button id="submit" class="btn btn-primary">Read Family</button>
+
+<div id="content"></div>
+
+<script>
+  var $content = $('#content');
+  
+  // When the user clicks on the button, see if there's an ID in the input.
+  // If there is an id then get that person's family.
+  $('#submit').click(function(){
+    var id = $('#personIdInput').val();
+    if(id){
+      
+      // Display a loading indicator
+      $content.html('');
+      var $loader = getLoadingIndicator().appendTo($content);
+      
+      // Get the person, their relationships, and all persons in those relationships
+      client.getPersonWithRelationships(id, {persons: true}).then(function(personResponse){
+        $loader.hide();
+        
+        var person = personResponse.getPrimaryPerson();
+        
+        // Parents
+        $('<h2>').text('Parent Relationships').appendTo($content);
+        var parentRels = personResponse.getParentRelationships();
+        for(var i = 0; i < parentRels.length; i++){
+          var relationship = parentRels[i],
+              father = personResponse.getPerson(relationship.getFatherId()),
+              mother = personResponse.getPerson(relationship.getMotherId());
+          displayChildAndParentsRelationship(relationship, father, mother, person).appendTo($content);
+          $('<hr>').appendTo($content);
+        }
+        
+        // Spouses
+        $('<h2>').text('Spouses Relationships').appendTo($content);
+        var spouseRels = personResponse.getSpouseRelationships();
+        for(var i = 0; i < spouseRels.length; i++){
+          var relationship = spouseRels[i],
+              spouseId = relationship.getSpouseId(person.getId()),
+              spouse = personResponse.getPerson(spouseId);
+          displayRelationship(relationship, person, spouse).appendTo($content);
+          $('<hr>').appendTo($content);
+        }
+        
+        // Children
+        $('<h2>').text('Child Relationship').appendTo($content);
+        var childRels = personResponse.getChildRelationships();
+        for(var i = 0; i < childRels.length; i++){
+          var relationship = childRels[i],
+              father = personResponse.getPerson(relationship.getFatherId()),
+              mother = personResponse.getPerson(relationship.getMotherId()),
+              child = personResponse.getPerson(relationship.getChildId());
+          displayChildAndParentsRelationship(relationship, father, mother, child).appendTo($content);
+          $('<hr>').appendTo($content);
+        }
+      })
+      
+      // Catch any errors
+      .catch(function(e){
+        $loader.hide();
+        $content.append(displayError(e));
+      });
+    }
+  });
+</script>

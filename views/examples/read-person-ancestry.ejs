@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="form-group col-sm-6 col-md-4">
+    <label for="personIdInput">Person Id</label>
+    <input type="text" class="form-control" id="personIdInput" placeholder="Person Id">
+  </div>
+</div>
+<button id="submit" class="btn btn-primary">Read Ancestry</button>
+<br><br>
+<div id="content"></div>
+
+<script>
+  var $content = $('#content');
+  
+  // When the user clicks on the button, see if there's an ID in the input.
+  // If there is an id then get that person's ancestry.
+  $('#submit').click(function(){
+    var id = $('#personIdInput').val();
+    if(id){
+      
+      // Display a loading indicator
+      $content.html('');
+      var $loader = getLoadingIndicator().appendTo($content);
+      
+      // Get the person's ancestry
+      client.getAncestry(id, {generations: 4}).then(function(ancestryResponse){
+        $loader.hide();
+        
+        var $table = $('<table>').addClass('table');
+        $table.append(
+          $('<tr>')
+            .append('<th>Ahnentafel #</th>')
+            .append('<th>ID</th>')
+            .append('<th>Name</th>')
+        );
+        
+        // The structure of the pedigree is denoted by Ahnentafel numbers.
+        // Because we asked for 4 generations, the max Ahnentafel number will
+        // be 15. Therefore we loop from 1 - 15 and print out the people.
+        for(var i = 1; i <= 15; i++){
+          if(ancestryResponse.exists(i)){
+            var person = ancestryResponse.getPerson(i),
+                $row = $('<tr>').appendTo($table);
+            $('<td>').text(person.getAscendancyNumber()).appendTo($row);
+            $('<td>').text(person.getId()).appendTo($row);
+            $('<td>').text(person.getDisplayName()).appendTo($row);
+          }
+        }
+        
+        $content.append($table);
+      })
+      
+      // Catch any errors
+      .catch(function(e){
+        $loader.hide();
+        $content.append(displayError(e));
+      });
+    }
+  });
+</script>

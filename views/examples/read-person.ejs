@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="form-group col-sm-6 col-md-4">
+    <label for="personIdInput">Person Id</label>
+    <input type="text" class="form-control" id="personIdInput" placeholder="Person Id">
+  </div>
+</div>
+<button id="submit" class="btn btn-primary">Read Person</button>
+
+<div id="content"></div>
+
+<script>
+  var $content = $('#content');
+  
+  // When the user clicks on the button, see if there's an ID in the input.
+  // If there is an id then get that person and display their information.
+  $('#submit').click(function(){
+    var id = $('#personIdInput').val();
+    if(id){
+      
+      // Display a loading indication
+      $content.html('');
+      var $loader = getLoadingIndicator().appendTo($content);
+      
+      // Get the person
+      client.getPerson(id).then(function(personResponse){
+        $loader.hide();
+        displayPerson(personResponse.getPerson()).appendTo($content);
+      })
+      
+      // Catch any errors
+      .catch(function(e){
+        $loader.hide();
+        $content.append(displayError(e));
+      });
+    }
+  });
+</script>

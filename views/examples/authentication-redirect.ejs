@@ -1,0 +1,19 @@
+<h1>Authentication - Redirect</h1>
+
+<button id="signinBtn" class="btn btn-primary">Sign In</button>
+
+<script>
+  // This is a shortcut for $(document).ready()
+  $(function(){
+    
+    // When the user clicks the "Sign In" button, call the `signIn` method.
+    $('#signinBtn').click(signIn);
+  });
+  
+  // Function is called when the user clicks the "Sign In" button.
+  function signIn(){
+    
+    // Redirect the user to the FamilySearch OAuth page
+    document.location.href = client.getOAuth2AuthorizeURL();
+  }
+</script>

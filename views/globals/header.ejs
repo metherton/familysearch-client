@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FamilySearch JavaScript SDK Sample App</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/main.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">FamilySearch JavaScript SDK Sample App</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <p class="navbar-text navbar-right"><a class="navbar-link" href="https://github.com/FamilySearch/familysearch-javascript-sdk" target="_blank">SDK</a></p>
+          <p class="navbar-text navbar-right"><a id="signOut" class="navbar-link" href="">Sign Out</a></p>
+          <p class="navbar-text navbar-right"><span id="username"></span></p>
+        </div>
+      </div>
+    </nav>
+    <div class="container"><!-- start main container -->
+
+      <div class="row">
+        
+        <%- include('sidebar'); %>
+        
+        <div id="main" class="col-sm-9"><!-- start main column -->
+        
+        <!-- normally scripts would be added at the bottom of the page, but in order
+        to make the example source code easier to develop and view we have it at the top.
+        this allows us to have the javascript code next to the html code it interacts with. -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="//unpkg.com/familysearch-javascript-sdk@2.8.2/dist/familysearch-javascript-sdk.min.js"></script>
+        <script src="/assets/cookies.js"></script>
+        <script src="/assets/client.js"></script>
+        <script src="/assets/helpers.js"></script>

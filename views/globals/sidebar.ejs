@@ -1,0 +1,57 @@
+<%
+
+  var groups = {
+    'AUTHENTICATION': [
+      {
+        title: 'Authentication - Popup',
+        url: 'authentication'
+      },
+      {
+        title: 'Authentication - Redirect',
+        url: 'authentication-redirect'
+      }
+    ],
+    'PERSON READ': [
+      {
+        title: 'Read Current User Person',
+        url: 'current-user-person'
+      },
+      {
+        title: 'Read A Person By Id',
+        url: 'read-person'
+      },
+      {
+        title: 'Read A Person\'s Family',
+        url: 'read-person-family'
+      },
+      {
+        title: 'Read A Person\'s Ancestry',
+        url: 'read-person-ancestry'
+      },
+      {
+        title: 'Person Search',
+        url: 'person-search'
+      }
+    ]
+  };
+
+%>
+
+<div id="sidebar" class="col-sm-3">
+  <% 
+    for(var groupName in groups){ 
+      var group = groups[groupName];
+  %>
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= groupName %></div>
+    <div class="list-group">
+      <% 
+        for(var i = 0; i < group.length; i++) {
+          var example = group[i];
+      %>
+      <a href="/examples/<%= example.url %>" class="list-group-item"><%= example.title %></a>
+      <% } %>
+    </div>
+  </div>
+  <% } %>
+</div>

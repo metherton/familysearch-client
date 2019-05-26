@@ -1,0 +1,19 @@
+{
+  "name": "javascript-sdk-sample-app",
+  "version": "1.0.0",
+  "description": "Sample app for the FamilySearch JavaScript SDK",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FamilySearch/javascript-sdk-sample-app.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FamilySearch/javascript-sdk-sample-app/issues"
+  },
+  "homepage": "https://github.com/FamilySearch/javascript-sdk-sample-app",
+  "dependencies": {
+    "ejs": "2.5.7",
+    "express": "4.13.3"
+  }
+}

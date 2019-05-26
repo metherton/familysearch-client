@@ -1,0 +1,29 @@
+<h1>Authentication - Redirect Handler</h1>
+
+<p>Your access token is:</p>
+<pre id="accessToken"></pre>
+
+<script>
+  // This is a shortcut for $(document).ready()
+  $(function(){
+    
+    // When the page is done loading we know that the client object is available
+    // so now we pass it the code in the url so that it can fetch the access token.
+    client.getAccessToken(getParameterByName('code')).then(function(accessToken){
+      
+      // Display the access token
+      $('#accessToken').text(accessToken);
+    })
+    
+    // Error handling
+    .catch(function(e){
+      $('#accessToken').after(displayError(e));
+    });
+  });
+  
+  // http://stackoverflow.com/a/5158301
+  function getParameterByName(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+  }
+</script>

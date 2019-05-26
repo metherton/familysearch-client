@@ -1,0 +1,8 @@
+#signOut {
+  display: none;
+}
+
+pre {
+  max-height: 400px;
+  word-wrap: normal;
+}
